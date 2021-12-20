@@ -11,10 +11,10 @@ auto_setup(__file__)
 from poco.drivers.ios import iosPoco
         
 poco = iosPoco()
-roundConfig1 = {"skills": [(1, 0), (4, 0), (6, 0),(7, 0),(9, 0),(8, 3) ], "hoguNo": [1], "wave":1,"makeup":False}
-roundConfig2 = {"skills": [(5, 0)], "hoguNo": [2], "wave":2,"makeup":False}
-roundConfig3 = {"skills": [(10, 2,3,""),(9, 0) ], "hoguNo": [3], "wave":3,"makeup":False}
-team1 = {"configuration":[roundConfig1,roundConfig2,roundConfig3],"description":"卡特家刷钉子"}
+roundConfig1 = {"skills": [(1, 0), (2, 3), (3, 3),(5, 3),(6, 3),(9, 0) ], "hoguNo": [3], "wave":1,"makeup":False}
+roundConfig2 = {"skills": [(4, 0),(10, 3,3,""),], "hoguNo": [3], "wave":2,"makeup":False}
+roundConfig3 = {"skills": [(10, 1,3,"") ], "hoguNo": [3], "wave":3,"makeup":False}
+team1 = {"configuration":[roundConfig1,roundConfig2,roundConfig3],"description":"无限池票,伊阿宋单核"}
 
 roundConfig4 = {"skills": [(1, 0), (2, 0),(3,0),(4,0),(5,0),(6,0),(9,0) ,(10, 3,2,"")], "hoguNo": [2], "wave":1,"makeup":False}
 roundConfig5 = {"skills": [], "hoguNo": [1], "wave":2,"makeup":False}
@@ -39,12 +39,16 @@ team5 = {"configuration":[roundConfig13,roundConfig14,roundConfig15],"descriptio
 
 
 #设置
-config = team5["configuration"];
+config = team1["configuration"];
 total = 1000;
 count = 1;
-unlimited = False;
+#无限池Flag
+unlimited = True;
+#目前有几个单个的礼装 到 5 程序就停止
+#假如礼装数量为4，刚从商店兑换完这个数应该设置成4，因为掉一个就可以平铺
+#掉完一个后程序会停止，得手动更新这个数字，如果现在5礼装无满破，应该设置成0。即再刷5个就停止
 rewardNum= 4;
-autoLoadPoint = False;
+autoLoadPoint = True;
 
 def pickLastCard(position): 
     card1 = ((326,690),(560,950))
@@ -263,7 +267,7 @@ def battleFinish():
     wait(Template(r"tpl1625707970096.png", record_pos=(0.301, 0.204), resolution=(2532, 1170)))
     if unlimited :
         
-        if (exists(Template(r"tpl1632084267313.png", record_pos=(-0.184, -0.134), resolution=(2532, 1170)))!=False):
+        if (exists(Template(r"tpl1639988921163.png", record_pos=(-0.016, -0.018), resolution=(2532, 1170)))!=False):
             rewardNum+=1
             if rewardNum >=5:  
                 count +=100000
