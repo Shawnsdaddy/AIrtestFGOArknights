@@ -229,6 +229,16 @@ def doOneBattle(config):
     castNoblePhantasm(config["hoguNo"],config["wave"],config["makeup"])
     if(config["wave"]==3):
         catchMiss()
+def waitSupportPage():
+    try:
+        wait(Template(r"tpl1625708685398.png", record_pos=(0.321, -0.204), resolution=(2532, 1170)))
+        return None;
+    except TargetNotFoundError:
+        if exists(Template(r"tpl1632089176760.png", record_pos=(0.001, -0.001), resolution=(2532, 1170))):
+            touch((1600,900))
+            waitSupportPage()
+        else :
+            raise TargetNotFoundError
 def findSupport(count):
     support = exists(Template(r"tpl1640023598450.png", record_pos=(0.209, -0.015), resolution=(2532, 1170)))
     if (support!=False):
@@ -248,10 +258,7 @@ def findSupport(count):
         swipe((1170,1000), (1150,400)) 
         findSupport(count+1)        
 def battleStart():
-    wait(Template(r"tpl1625708685398.png", record_pos=(0.321, -0.204), resolution=(2532, 1170)))
-    # CBA
-    #support = exists(Template(r"tpl1625594007027.png", record_pos=(-0.1, -0.077), resolution=(2532, 1170)))
-    # 术傻
+    waitSupportPage()
     findSupport(0) 
     if count ==1:
         sleep(3)
