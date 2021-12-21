@@ -6,7 +6,7 @@ import datetime
 
 from airtest.core.settings import Settings as ST;
 #设置图片识别pass为90%
-ST.THRESHOLD = 0.8
+ST.THRESHOLD = 0.86
 auto_setup(__file__)
 from poco.drivers.ios import iosPoco
         
@@ -47,7 +47,7 @@ unlimited = True;
 #目前有几个单个的礼装 到 5 程序就停止
 #假如礼装数量为4，刚从商店兑换完这个数应该设置成4，因为掉一个就可以平铺
 #掉完一个后程序会停止，得手动更新这个数字，如果现在5礼装无满破，应该设置成0。即再刷5个就停止
-rewardNum= 4;
+rewardNum= 3;
 autoLoadPoint = True;
 
 def pickLastCard(position): 
@@ -229,34 +229,48 @@ def doOneBattle(config):
     castNoblePhantasm(config["hoguNo"],config["wave"],config["makeup"])
     if(config["wave"]==3):
         catchMiss()
+def findSupport(count):
+    support = exists(Template(r"tpl1640023598450.png", record_pos=(0.209, -0.015), resolution=(2532, 1170)))
+    if (support!=False):
+        touch(support)
+        return None
+    elif (exists(Template(r"tpl1640025661686.png", record_pos=(0.002, 0.056), resolution=(2532, 1170)))!=False or count>3):
+        if(count==-1):
+            sleep(10)
+        touch((1550,226))
+        wait(Template(r"tpl1632155301033.png", record_pos=(0.127, 0.131), resolution=(2532, 1170)))
+        touch((1600,900))                    
+        findSupport(-1)
+    elif exists(Template(r"tpl1632089176760.png", record_pos=(0.001, -0.001), resolution=(2532, 1170))):
+        touch((1600,900))
+        findSupport(count+1)       
+    else:
+        swipe((1170,1000), (1150,400)) 
+        findSupport(count+1)        
 def battleStart():
     wait(Template(r"tpl1625708685398.png", record_pos=(0.321, -0.204), resolution=(2532, 1170)))
     # CBA
     #support = exists(Template(r"tpl1625594007027.png", record_pos=(-0.1, -0.077), resolution=(2532, 1170)))
     # 术傻
-    support = exists(Template(r"tpl1628233851456.png", record_pos=(0.004, -0.019), resolution=(2532, 1170)))
-    failCount = 0
-    
-    while support == False: 
-        if failCount >3 :
-            touch((1550,226))
-            wait(Template(r"tpl1632155301033.png", record_pos=(0.127, 0.131), resolution=(2532, 1170)))
-            touch((1600,900))
-            failCount = 0;
-            continue
-        if exists(Template(r"tpl1632089176760.png", record_pos=(0.001, -0.001), resolution=(2532, 1170))):
-            touch((1600,900))
-            continue;
-        swipe((1170,1000), (1150,400))
-        failCount+=1
-        support = exists(Template(r"tpl1628233851456.png", record_pos=(0.004, -0.019), resolution=(2532, 1170)))
-    touch(support)
+    findSupport(0) 
     if count ==1:
         sleep(3)
         go = exists(Template(r"tpl1625642480951.png", record_pos=(0.353, 0.203), resolution=(2532, 1170)))
         if go !=False :
             touch(go)
     waitAttackButton()
+def waitContinue():
+    try:
+        wait(Template(r"tpl1625707993376.png", record_pos=(0.128, 0.133), resolution=(2532, 1170)))
+        touch((1600,930))
+        return None;
+    except TargetNotFoundError:
+        if(exists(Template(r"tpl1640024029567.png", record_pos=(0.002, -0.098), resolution=(2532, 1170)))!=False):
+            touch((750,1000))
+            touch((1600,930))
+            return None;
+        else: 
+            waitContinue()
 def battleFinish():
     global count
     global rewardNum
@@ -271,23 +285,22 @@ def battleFinish():
             rewardNum+=1
             if rewardNum >=5:  
                 count +=100000
-            print(rewardNum)
-            print(datetime.datetime.now())
+        print(rewardNum)
+        print(datetime.datetime.now())
     touch((2100,1100))
-    wait(Template(r"tpl1625707993376.png", record_pos=(0.128, 0.133), resolution=(2532, 1170)))
-    touch((1600,930))
+    waitContinue()
     notEnough=exists(Template(r"tpl1625643337618.png", record_pos=(0.006, -0.188), resolution=(2532, 1170)))
     if notEnough!= False:
         if autoLoadPoint==True:
             #银
-            touch((1300,800))
+            #touch((1300,800))
             #金
             #touch((1300,500))
             #石头
             #touch((1300,350))
             #铜
-            #swipe((1300,800), (1300,500))
-            #touch((1300,850))
+            swipe((1300,800), (1300,500))
+            touch((1300,850))
             
             wait(Template(r"tpl1632165648098.png", record_pos=(0.128, 0.13), resolution=(2532, 1170)))
             touch((1600,900))
@@ -303,7 +316,7 @@ def FGOStart(config):
         doOneBattle(config[2])
         battleFinish();
         count += 1
-#点任意两下
+
 FGOStart(config)
 
 
