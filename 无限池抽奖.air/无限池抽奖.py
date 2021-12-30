@@ -3,14 +3,25 @@ __author__ = "xubowu"
 import datetime
 from airtest.core.api import *
 ST.THRESHOLD = 0.8
+ST.FIND_TIMEOUT = 0
+ST.FIND_TIMEOUT_TMP = 0
+ST.CVSTRATEGY = ['tpl']
 
 auto_setup(__file__)
-total = 100;
-count = 4;
+total = 470;
+count =233;
 sell = True;
 couponRedeem = True;
-couponType = 3;
+couponType = 1;
 
+def waitPicture(x):
+    try:
+        sleep(0.5)
+        wait(x)  
+    except TargetNotFoundError:
+        if exists(Template(r"tpl1640821791750.png", record_pos=(-0.002, -0.012), resolution=(2532, 1170))):
+            touch((1600,920))
+        waitPicture(x)
 def redeemCoupon():
     global couponType
     if(exists(Template(r"tpl1640133084099.png", record_pos=(-0.254, -0.075), resolution=(2532, 1170)))):
@@ -38,42 +49,52 @@ def clearMailBox():
         if (redeemCount==0 and couponRedeem==True):
             redeemCoupon()   
             sleep(3)
-        wait(Template(r"tpl1632092063050.png", record_pos=(0.274, -0.088), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1632092063050.png", record_pos=(0.274, -0.088), resolution=(2532, 1170)))
         touch((1950,350))
-        wait(Template(r"tpl1632092095121.png", record_pos=(0.126, 0.128), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1632092095121.png", record_pos=(0.126, 0.128), resolution=(2532, 1170)))
         touch((1600,900))
         sleep(3)
         redeemCount =redeemCount+1
     #卖掉
     if sell :
         touch((800,750))
-        wait(Template(r"tpl1632092436300.png", record_pos=(-0.382, -0.149), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1632092436300.png", record_pos=(-0.382, -0.149), resolution=(2532, 1170)))
         swipe((450,400), ((1750,870)),duration=3)
         sellCount = 1; 
         while sellCount <=5: 
             swipe((443,1035), ((1750,1035)),duration=3)
             sellCount += 1
         touch((2100,1100))
-        wait(Template(r"tpl1632108700318.png", record_pos=(0.127, 0.169), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1632108700318.png", record_pos=(0.127, 0.169), resolution=(2532, 1170)))
         touch((1600,1000))
+        sleep(2)
+        if exists(Template(r"tpl1640515814897.png", record_pos=(0.002, -0.007), resolution=(2532, 1170))):
+            touch(Template(r"tpl1640515829288.png", record_pos=(0.187, 0.128), resolution=(2532, 1170)))
+            sleep(0.5)
 
-        wait(Template(r"tpl1632092589088.png", record_pos=(0.003, 0.171), resolution=(2532, 1170)))
+
+
+        waitPicture(Template(r"tpl1632092589088.png", record_pos=(0.003, 0.171), resolution=(2532, 1170)))
         touch((1250,1000))
-        touch(Template(r"tpl1632092615392.png", record_pos=(-0.386, -0.203), resolution=(2532, 1170)))
-        touch(Template(r"tpl1640131982901.png", record_pos=(0.235, -0.106), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1632092615392.png", record_pos=(-0.386, -0.203), resolution=(2532, 1170)))
+        touch((305,71))
+        waitPicture(Template(r"tpl1640131982901.png", record_pos=(0.235, -0.106), resolution=(2532, 1170)))
+        touch((1883,314))
 
-        touch(Template(r"tpl1640128794963.png", record_pos=(0.201, -0.103), resolution=(2532, 1170)))
-        touch(Template(r"tpl1640128986388.png", record_pos=(0.063, -0.143), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1640128794963.png", record_pos=(0.201, -0.103), resolution=(2532, 1170)))
+        touch((1883,314))
+        waitPicture(Template(r"tpl1640128986388.png", record_pos=(0.063, -0.143), resolution=(2532, 1170)))
+        touch((1400,230))
 
     else : 
         touch((1250,900))
-        wait(Template(r"tpl1632092615392.png", record_pos=(-0.386, -0.203), resolution=(2532, 1170)))
+        waitPicture(Template(r"tpl1632092615392.png", record_pos=(-0.386, -0.203), resolution=(2532, 1170)))
         touch((275,65))
 def collect():
     try:
         wait(Template(r"tpl1640129003664.png", record_pos=(-0.224, 0.071), resolution=(2532, 1170)))
 
-        touch((780,692),110)
+        touch((780,692),55)
         collect()
     except TargetNotFoundError:
         if(exists(Template(r"tpl1640129042986.png", record_pos=(-0.217, 0.031), resolution=(2532, 1170)))):
@@ -84,11 +105,15 @@ def collect():
         if exists(Template(r"tpl1632091786617.png", record_pos=(0.002, -0.076), resolution=(2532, 1170))):
             clearMailBox()
             collect()
+        if exists(Template(r"tpl1640813749400.png", record_pos=(0.354, -0.075), resolution=(2532, 1170))):
+            return None
+        else: 
+            collect()
 def reset():
     touch((2100,400))
-    wait(Template(r"tpl1631942364444.png", record_pos=(0.126, 0.13), resolution=(2532, 1170)))
+    waitPicture(Template(r"tpl1631942364444.png", record_pos=(0.126, 0.13), resolution=(2532, 1170)))
     touch((1600,900))
-    wait(Template(r"tpl1632076609376.png", record_pos=(0.001, 0.131), resolution=(2532, 1170)))
+    waitPicture(Template(r"tpl1632076609376.png", record_pos=(0.001, 0.131), resolution=(2532, 1170)))
     touch((1260,900))
 def start():
     global count
