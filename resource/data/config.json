@@ -1,0 +1,118 @@
+[
+  {
+    "id": "CONTROL",
+    "name": "控制中枢",
+    "operators": [
+      {
+        "name": "凯尔希",
+        "id": "char_003_kalts",
+        "group": null,
+        "index": 0,
+        "alter": null
+      },
+      {
+        "name": "森蚺",
+        "id": "char_416_zumama",
+        "group": 0,
+        "index": 1,
+        "alter": null
+      },
+      {
+        "name": "焰尾",
+        "id": "char_420_flamtl",
+        "group": 1,
+        "index": 2,
+        "alter": null
+      },
+      {
+        "name": "夕",
+        "id": "char_2015_dusk",
+        "group": 2,
+        "index": 3,
+        "alter": null
+      },
+      {
+        "name": "令",
+        "id": "char_2023_ling",
+        "group": 2,
+        "index": 4,
+        "alter": null
+      }
+    ]
+  },
+  {
+    "id": "MEETING",
+    "name": "会客室",
+    "operators": [
+      {
+        "name": "红",
+        "id": "char_144_red",
+        "group": null,
+        "index": 0,
+        "alter": null
+      },
+      {
+        "name": "陈",
+        "id": "char_010_chen",
+        "group": null,
+        "index": 1,
+        "alter": null
+      }
+    ]
+  },
+  {
+    "id": "TRADING",
+    "name": "贸易站",
+    "operators": [
+      {
+        "name": "柏喙",
+        "id": "char_252_bibeak",
+        "group": 3,
+        "index": 0,
+        "alter": null
+      },
+      {
+        "name": "巫恋",
+        "id": "char_254_vodfox",
+        "group": 3,
+        "index": 1,
+        "alter": null
+      },
+      {
+        "name": "龙舌兰",
+        "id": "char_486_takila",
+        "group": 3,
+        "index": 2,
+        "alter": null
+      }
+    ]
+  },
+  {
+    "id": "TRADING",
+    "name": "贸易站",
+    "operators": [
+      {
+        "name": "柏喙",
+        "id": "char_252_bibeak",
+        "group": 3,
+        "index": 0,
+        "alter": null
+      },
+      {
+        "name": "巫恋",
+        "id": "char_254_vodfox",
+        "group": 3,
+        "index": 1,
+        "alter": null
+      },
+      {
+        "name": "龙舌兰",
+        "id": "char_486_takila",
+        "group": 3,
+        "index": 2,
+        "alter": null
+      }
+    ]
+  }
+  
+]

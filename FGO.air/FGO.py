@@ -12,9 +12,8 @@ ST.FIND_TIMEOUT_TMP = 0
 ST.CVSTRATEGY = ['tpl']
 
 auto_setup(__file__)
-from poco.drivers.ios import iosPoco
-        
-poco = iosPoco()
+
+
 roundConfig1 = {"skills": [(1, 0), (2, 3), (3, 3),(5, 3),(6, 3),(9, 0)], "hoguNo": [3], "wave":1,"makeup":False}
 roundConfig2 = {"skills": [(4, 0),(10, 3,3,""),], "hoguNo": [3], "wave":2,"makeup":False}
 roundConfig3 = {"skills": [(10, 1,3,"") ], "hoguNo": [3], "wave":3,"makeup":False}
@@ -347,4 +346,21 @@ def FGOStart(config):
         doOneBattle(config[2])
         battleFinish();
         count += 1
-FGOStart(config)
+# FGOStart(config)
+
+chouka = 75
+choukaindex = 0
+
+while choukaindex<chouka : 
+    
+    touch((800,950))
+    sleep(1)
+    touch(Template(r"tpl1646506369163.png", record_pos=(0.151, 0.161), resolution=(2240, 1260)))
+    while exists(Template(r"tpl1646506882780.png", record_pos=(-0.004, -0.085), resolution=(2240, 1260)))==False :
+        touch((1250,100),5)
+        if(exists(Template(r"tpl1646506742636.png", record_pos=(-0.471, -0.25), resolution=(2240, 1260)))) :
+            touch(Template(r"tpl1646506763217.png", record_pos=(-0.471, -0.248), resolution=(2240, 1260)))
+            sleep(1)        
+    choukaindex+=1
+    print("finish "+ str(choukaindex))
+
