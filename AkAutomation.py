@@ -29,8 +29,18 @@ count = 1;
 autoLoadPoint = False;
 showFacilityDetail = False;
 
-swtichMenuLag = 10;
+swtichMenuLag = 99;
 deviceconfig = mumu;
+def get_sec(time_str,limit = 9000):
+    """Get seconds from time."""
+    h, m, s = time_str.split(':')
+    seconds = int(h) * 3600 + int(m) * 60 + int(s);
+
+    if seconds>9000:
+        raise Exception('Result Out Of Limit')
+    else:
+        print(seconds)
+        return int(h) * 3600 + int(m) * 60 + int(s)
 
 def readScreen(cord):
     screen = G.DEVICE.snapshot()
@@ -46,8 +56,12 @@ def readScreen(cord):
     thresh = 255 - thresh
     pic = im.fromarray(thresh)
     pic.save("F:\Git\AIrtestFGOArknights/test0.png", quality=99, optimize=True)    
-    data = pytesseract.image_to_string(thresh, lang='eng',config='--psm 6')
-    return (data.strip())
+    data = (pytesseract.image_to_string(thresh, lang='eng',config='--psm 6')).strip()
+    print(data)
+    try:                
+        return get_sec(data)    
+    except Exception as e:
+        return readScreen(cord);    
 
 class Operator:
     def __init__(self,name,onSelectRest,currentEnergy,onSelectDuty,deSelect,group,changeTime):
@@ -80,7 +94,17 @@ class Operator:
 
 def touchPic(pic,delay=0):
     touch(pic)
-    sleep(delay)
+    if delay==99:
+        while True :
+            sleep(1)
+            if exists(Template(r"tpl1657092872368.png", record_pos=(0.157, 0.236), resolution=(2560, 1440))) :
+                print('connecting ')
+                continue;
+            else : 
+                print('connecting finished....')
+                break;
+    else :
+        sleep(delay)
 def battleStart():
     #wait(Template(r"tpl1626937650893.png", record_pos=(0.372, 0.187), resolution=(2532, 1170)))
     touch(Template(r"tpl1626937650893.png", record_pos=(0.372, 0.187), resolution=(2532, 1170)))
@@ -207,10 +231,7 @@ def openFacilityDetail(floor,index):
 
 #touch(Template(r"tpl1649277817432.png", record_pos=(-0.315, 0.261), resolution=(2240, 1260)))
 # touch(Template(r"tpl1649314570799.png", record_pos=(-0.4, -0.187), resolution=(2240, 1260)))+
-def get_sec(time_str):
-    """Get seconds from time."""
-    h, m, s = time_str.split(':')
-    return int(h) * 3600 + int(m) * 60 + int(s)
+
 
 def switchTrade():
 
@@ -220,25 +241,45 @@ def switchTrade():
     touchPic(Template(r"tpl1656145808681.png", record_pos=(0.421, 0.248), resolution=(2560, 1440)),swtichMenuLag)
     touch(Template(r"tpl1656145829970.png", record_pos=(-0.211, 0.104), resolution=(2560, 1440)))
     touch(Template(r"tpl1656145838306.png", record_pos=(0.251, -0.019), resolution=(2560, 1440)))
-    touchPic(Template(r"tpl1656145847945.png", record_pos=(0.241, 0.174), resolution=(2560, 1440)),swtichMenuLag)
-    touchPic(Template(r"tpl1656147745803.png", record_pos=(-0.207, 0.077), resolution=(2560, 1440)),swtichMenuLag)
-
-    #touchPic(Template(r"tpl1656145855589.png", record_pos=(-0.28, 0.173), resolution=(2560, 1440)),swtichMenuLag)
-    
-    orderTime = readScreen((653,672,843,730));
-    print('剩余时间' + orderTime)
-    sleepTime=get_sec(orderTime)-180
-    print(sleepTime)
-    #print(get_sec(sleepTime)-1200)
+    test = False;
+    if test:
+        touchPic(Template(r"tpl1656145855589.png", record_pos=(-0.28, 0.173), resolution=(2560, 1440)),swtichMenuLag)
+    else :
+        
+        touchPic(Template(r"tpl1656145847945.png", record_pos=(0.241, 0.174), resolution=(2560, 1440)),swtichMenuLag)
+        sleep(10)
+        touchPic(Template(r"tpl1656147745803.png", record_pos=(-0.207, 0.077), resolution=(2560, 1440)),swtichMenuLag)
+        sleep(15)           
+    sleepTime = readScreen((660,680,830,730))-1200;        
+    print(sleepTime)    
     
     touch(Template(r"tpl1656145874854.png", record_pos=(-0.086, 0.21), resolution=(2560, 1440)))
     touch(Template(r"tpl1656145895568.png", record_pos=(-0.013, -0.152), resolution=(2560, 1440)))
     touch(Template(r"tpl1656145908506.png", record_pos=(0.327, 0.097), resolution=(2560, 1440)))
     touchPic(Template(r"tpl1656145920163.png", record_pos=(0.421, 0.247), resolution=(2560, 1440)),swtichMenuLag)
-    sleep(sleepTime)
-sleep(7200)
+    if test:
+        print('start sleep 10 s')
+        sleep(10)       
+    else :                 
+        sleep(sleepTime)    
+print("start")
 while True:
     switchTrade()
+    #orderTime = readScreen((660,670,830,730));
+#     print(orderTime-1200)
+#     sleep(orderTime-1200)
+
+
+
+image = cv2.imread('F:\Git\AIrtestFGOArknights/score2.png')        
+gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
+thresh = 255 - thresh
+pic = im.fromarray(thresh)
+pic.save("F:\Git\AIrtestFGOArknights/test2.png", quality=100, optimize=True)    
+data = pytesseract.image_to_string(thresh, lang='eng',config='--psm 6')
+print(data.strip())
 
 
 # orderTime = readScreen((643,673,839,721));
